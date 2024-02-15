@@ -1,0 +1,263 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <http://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ex: <http://example.org/>
+PREFIX xs: <http://www.w3.org/2001/XMLSchema#>
+
+
+# Define the main CV shape
+start = @<CVShape>
+
+# Define the CV shape
+<CVShape> {
+   rdf:type foaf:Document ;
+   schema:person @<PersonShape>
+        // rdfs:comment "Defines the persons personal information";
+   schema:Text xsd:string
+          // rdfs:comment "Profile statement"
+            // rdfs:label "profileStatement";
+  schema:workExperience @<WorkExperienceShape>*
+         // rdfs:comment "The persons work experience"
+            // rdfs:label "workExperience";
+    schema:education @<EducationShape>*
+         // rdfs:comment "The persons education";
+    schema:skills @<SkillsShape>*
+            // rdfs:comment "The persons skills"
+            // rdfs:label "skills";
+    schema:languages @<LanguagesShape>*
+            // rdfs:comment "The persons languages"
+            // rdfs:label "languages";
+    schema:portfolio @<PortfolioShape>*
+         // rdfs:comment "The persons portfolio"
+         // rdfs:label "portfolio";
+    schema:hobbies @<HobbyShape>*
+         // rdfs:comment "The persons hobbies"
+            // rdfs:label "hobbies";
+}
+
+
+# Define the Person shape
+<PersonShape> {
+   rdf:type foaf:Person ;
+   schema:givenName xsd:string
+        // rdfs:comment "The persons first name"
+        // rdfs:label "firstName";
+   schema:familyName xsd:string
+        // rdfs:comment "The persons last name"
+        // rdfs:label "lastName";
+
+   schema:birthDate xsd:date
+        // rdfs:comment "The persons date of birth"
+        // rdfs:label "dateOfBirth";
+
+   schema:telephone xsd:string
+        // rdfs:comment "The persons telephone number"
+        // rdfs:label "telephone";
+   schema:jobTitle xsd:string
+           // rdfs:comment "The job title of the person"
+              // rdfs:label "jobTitle";
+   schema:url xsd:anyURI
+        // rdfs:comment "The persons LinkedIn profile"
+        // rdfs:label "linkedInUrl";
+   schema:location @<LocationShape>
+        // rdfs:comment "The persons location"
+        // rdfs:label "location";
+   schema:image xsd:anyURI
+        // rdfs:comment "The persons profile picture"
+        // rdfs:label "profilePicture";
+
+   schema:drivingLicense @<DrivingLicense>
+        // rdfs:comment "The persons driving license"
+        // rdfs:label "drivingLicense";
+}
+
+# Define the WorkExperience shape
+<WorkExperienceShape>{
+    rdf:type schema:Organization ;
+    schema:jobTitle xsd:string
+          // rdfs:comment "The job title of the person"
+          // rdfs:label "jobTitle";
+    schema:startDate xsd:date
+          // rdfs:comment "The start date of the job"
+          // rdfs:label "startDate";
+    schema:endDate xsd:date?
+          // rdfs:comment "The end date of the job"
+          // rdfs:label "endDate";
+    schema:location @<CompanyShape>
+          // rdfs:comment "The company where the person worked"
+          // rdfs:label "work";
+    schema:description xsd:string
+          // rdfs:comment "Summary of the job"
+          // rdfs:label "summary";
+    #duties from duties shape
+    schema:duties @<DutiesShape>*
+          // rdfs:comment "The duties of the job"
+          // rdfs:label "duties";
+}
+
+# Define the Company shape
+<CompanyShape> {
+   rdf:type schema:Organization ;
+   schema:name xsd:string
+        // rdfs:comment "The name of the company"
+        // rdfs:label "companyName";
+   schema:location @<LocationShape>
+        // rdfs:comment "The location of the company"
+        // rdfs:label "companyLocation";
+}
+
+# Define the Duties shape
+<DutiesShape> {
+   rdf:type schema:Text ;
+  schema:Text xsd:string
+        // rdfs:comment "The duties of the job"
+        // rdfs:label "duties";
+}
+
+
+# Define the Education shape
+<EducationShape> {
+   rdf:type schema:Organization ;
+   schema:Organization @<SchoolShape>
+        // rdfs:comment "The school where the person studied"
+        // rdfs:label "school";
+   schema:degree @<DegreeShape>
+        // rdfs:comment "The degree the person has"
+        // rdfs:label "degree";
+   schema:description xsd:string
+        // rdfs:comment "Experience of the education"
+        // rdfs:label "expertise";
+   schema:startDate xsd:date
+        // rdfs:comment "The start date of the education"
+        // rdfs:label "startDate";
+   schema:endDate xsd:date?
+        // rdfs:comment "The end date of the education"
+        // rdfs:label "endDate";
+   #summary of the education
+   schema:description xsd:string?
+        // rdfs:comment "Summary of the education"
+        // rdfs:label "remark";
+   schema:location @<LocationShape>
+        // rdfs:comment "The location of the education"
+        // rdfs:label "educationLocation";
+}
+
+# Define the School shape
+<SchoolShape> {
+   rdf:type schema:Organization ;
+   schema:name xsd:string
+        // rdfs:comment "The name of the school"
+        // rdfs:label "schoolName";
+   schema:location @<LocationShape>
+        // rdfs:comment "The location of the school"
+        // rdfs:label "schoolLocation";
+}
+
+# Define the Skills shape
+<SkillsShape> {
+   rdf:type schema:Text ;
+   schema:technicalSkills @<TechnicalSkillsShape>*
+        // rdfs:comment "The technical skills of the person"
+        // rdfs:label "technicalSkills";
+    schema:softSkills xsd:string*
+        // rdfs:comment "The soft skills of the person"
+        // rdfs:label "softSkills";
+}
+
+# Define the TechnicalSkills shape
+<TechnicalSkillsShape> {
+   rdf:type schema:Text ;
+   schema:skillName xsd:string
+        // rdfs:comment "The name of the technical skill"
+        // rdfs:label "skillName";
+   schema:level xsd:integer
+        // rdfs:comment "The level of the technical skill"
+        // rdfs:label "level";
+   schema:isFavorite xsd:boolean
+        // rdfs:comment "The favorite technical skill"
+        // rdfs:label "isFavorite";
+}
+
+# Define the Languages shape
+<LanguagesShape> {
+   rdf:type schema:Text ;
+   schema:languageName xsd:string
+        // rdfs:comment "The name of the language"
+        // rdfs:label "languageName";
+   schema:languageLevel @<LanguageLevelShape>
+        // rdfs:comment "The proficiency of the language"
+        // rdfs:label "languageProficiency";
+}
+
+# Define the Portfolio shape
+<PortfolioShape> {
+   rdf:type schema:Text ;
+
+    schema:title xsd:string
+          // rdfs:comment "The title of the portfolio"
+          // rdfs:label "portfolioTitle";
+   schema:portfolioDescription xsd:string
+        // rdfs:comment "The description of the portfolio"
+        // rdfs:label "portfolioDescription";
+   schema:portfolioLink xsd:anyURI?
+        // rdfs:comment "The link to the portfolio"
+        // rdfs:label "portfolioLink";
+  schema:highlight @<HighlightShape>*
+          // rdfs:comment "The highlights of the portfolio"
+          // rdfs:label "portfolioHighlights";
+}
+
+# Define the Highlight shape
+<HighlightShape> {
+   rdf:type schema:Text ;
+   schema:Text xsd:string
+        // rdfs:comment "The highlight of the portfolio"
+        // rdfs:label "highlight";
+}
+
+# Define the Hobbies shape
+<HobbyShape> {
+   rdf:type schema:Text ;
+   schema:Text xsd:string
+        // rdfs:comment "The hobbies of the person"
+        // rdfs:label "hobby";
+}
+
+
+# Define the LanguageLevel shape
+<LanguageLevelShape> {
+   rdf:type schema:Text ;
+   xsd:string [ex:BASIC ex:INTERMEDIATE ex:ADVANCED ex:FLUENT ex:NATIVE]
+        // rdfs:comment "The level of the language"
+        // rdfs:label "languageLevel";
+}
+
+
+# Define the Degree shape
+<DegreeShape> {
+   rdf:type schema:Text ;
+    xsd:string [ex:HIGH_SCHOOL ex:POST_GRADUATE ex:PROFESSIONAL_BACHELOR ex:ACADEMIC_BACHELOR ex:MASTER ex:PHD]
+       // rdfs:comment "The degree the person has"
+       // rdfs:label "degreeType";
+}
+
+
+# define driving license shape, text of type string, with the values NA, A, AM, B, C, D, G
+<DrivingLicense> {
+   rdf:type schema:Text ;
+    xsd:string [ex:NA ex:A ex:AM ex:B ex:C ex:D ex:G]
+       // rdfs:comment "The type of driving license the person has";
+}
+
+
+
+# Define the Location shape (city, and country)
+<LocationShape> {
+   rdf:type schema:Place ;
+   schema:addressLocality xsd:string
+        // rdfs:comment "The city where the person lives";
+    schema:addressCountry xsd:string
+        // rdfs:comment "The country where the person lives";
+}

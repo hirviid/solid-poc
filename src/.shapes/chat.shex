@@ -1,0 +1,29 @@
+PREFIX srs: <https://shaperepo.com/schemas/chat#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX mee: <http://www.w3.org/ns/pim/meeting#>
+PREFIX purl: <http://purl.org/dc/elements/1.1/>
+PREFIX flow: <http://www.w3.org/2005/01/wf/flow#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ns: <http://rdfs.org/sioc/ns#>
+PREFIX terms: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX ic: <http://www.w3.org/2002/12/cal/ical#>
+
+srs:ChatShape EXTRA a {
+  a [ mee:Chat ];
+  purl:author IRI;
+  purl:title xsd:string;
+  flow:message @srs:ChatMessageShape *;
+  flow:participation @srs:ChatParticipationShape *;
+}
+
+srs:ChatMessageShape {
+  terms:created xsd:dateTime;
+  ns:content xsd:string;
+  foaf:maker IRI;
+}
+
+srs:ChatParticipationShape {
+  ic:dtstart xsd:dateTime;
+  flow:participant IRI;
+}
